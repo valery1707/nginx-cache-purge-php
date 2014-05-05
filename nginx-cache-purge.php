@@ -94,7 +94,7 @@ $files = filter_files_by_key($files, $filter);
 purge_cache($files);
 
 $response = array(
-	'success' => count($files) > 1,
+	'success' => count($files) > 0,
 	'filter' => $filter,
 	'count' => count($files),
 	'files' => $files,
