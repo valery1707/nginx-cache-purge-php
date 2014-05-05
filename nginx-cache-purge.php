@@ -3,26 +3,6 @@
 $cache_root = '/var/cache/nginx/all_realty';
 
 /**
- * @link http://stackoverflow.com/a/10473026/1263442
- * @param string $haystack
- * @param string $needle
- * @return bool
- */
-function startsWith($haystack, $needle) {
-	return $needle === "" || strpos($haystack, $needle) === 0;
-}
-
-/**
- * @link http://stackoverflow.com/a/10473026/1263442
- * @param string $haystack
- * @param string $needle
- * @return bool
- */
-function endsWith($haystack, $needle) {
-	return $needle === "" || substr($haystack, -strlen($needle)) === $needle;
-}
-
-/**
  * Поиск всех вложенных директорий в указанной директории
  * @param string $root Корневая директория для поиска
  * @return array Список директорий
