@@ -69,13 +69,13 @@ function find_cache_files($cache_root) {
  */
 function filter_files_by_key($files, $filter) {
 	$filter = '/' . preg_quote($filter, '/') . '/';
-        $result = array();
+	$result = array();
 	foreach ($files as $file => $key) {
 		if (preg_match($filter, $key)) {
 			$result[$file] = $key;
 		}
 	}
-        return $result;
+	return $result;
 }
 
 /**
