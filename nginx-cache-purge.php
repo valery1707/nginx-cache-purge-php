@@ -68,7 +68,7 @@ function find_cache_files($cache_root) {
  * @return array (полное имя файла) -> (ключ кеша)
  */
 function filter_files_by_key($files, $filter) {
-	$filter = '/' . preg_quote($filter, '/') . '/';
+	$filter = '/' . str_replace('/', '\/', $filter) . '/';
 	$result = array();
 	foreach ($files as $file => $key) {
 		if (preg_match($filter, $key)) {
