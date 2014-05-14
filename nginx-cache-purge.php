@@ -88,6 +88,18 @@ function purge_cache($files) {
 	}
 }
 
+/**
+ * Преобразование списка файлов в формат удобный для автоматизированной обработки ответа
+ * @param array $files (полное имя файла) -> (ключ кеша)
+ */
+function map_files_for_result($files) {
+	$result = array();
+	foreach ($files as $file => $key) {
+		$result[] = array('file' => $file, 'url' => $key);
+	}
+	return $result;
+}
+
 $filter = $_GET['filter'];
 $mode_readonly = isset($_GET['readonly']);
 
@@ -101,7 +113,7 @@ $response = array(
 	'success' => count($files) > 0,
 	'filter' => $filter,
 	'count' => count($files),
-	'files' => $files,
+	'files' => map_files_for_result($files),
 );
 echo json_encode($response);
 echo "\r\n";
