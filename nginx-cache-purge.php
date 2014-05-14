@@ -89,9 +89,13 @@ function purge_cache($files) {
 }
 
 $filter = $_GET['filter'];
+$mode_readonly = isset($_GET['readonly']);
+
 $files = find_cache_files($cache_root);
 $files = filter_files_by_key($files, $filter);
-purge_cache($files);
+if (!$mode_readonly) {
+	purge_cache($files);
+}
 
 $response = array(
 	'success' => count($files) > 0,
