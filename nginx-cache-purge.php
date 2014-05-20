@@ -3,6 +3,26 @@
 $cache_root = '/var/cache/nginx/all_realty';
 
 /**
+ * @link http://stackoverflow.com/a/10473026/1263442
+ * @param string $haystack
+ * @param string $needle
+ * @return bool
+ */
+function startsWith($haystack, $needle) {
+	return $needle === "" || strpos($haystack, $needle) === 0;
+}
+
+/**
+ * @link http://stackoverflow.com/a/10473026/1263442
+ * @param string $haystack
+ * @param string $needle
+ * @return bool
+ */
+function endsWith($haystack, $needle) {
+	return $needle === "" || substr($haystack, -strlen($needle)) === $needle;
+}
+
+/**
  * Поиск всех вложенных директорий в указанной директории
  * @param string $root Корневая директория для поиска
  * @return array Список директорий
@@ -45,17 +65,25 @@ function find_files($root) {
 function find_cache_files($cache_root) {
 	$result = array();
 	$files = find_files($cache_root);
+	$prefix = 'KEY: ';
+	$prefix_len = strlen($prefix);
 	foreach ($files as $file) {
 		# Открываем файл на чтение
 		$fp = fopen($file, 'r');
 		if ($fp) {
-			# Пропускаем заголовок и слово 'KEY: '
-			fseek($fp, 30);
-			# Считываем значение ключа
-			$key = fgets($fp);
+			$key = '';
+			while (!startsWith($key, $prefix)) {
+				# Считываем значение ключа
+				$key = fgets($fp);
+			}
 			# Закрываем файл
 			fclose($fp);
-			$result[$file] = trim($key);
+			if (startsWith($key, $prefix)) {
+				$key = trim(substr($key, $prefix_len));
+			} else {
+				$key = null;
+			}
+			$result[$file] = $key;
 		}
 	}
 	return $result;
