@@ -142,6 +142,7 @@ $response = array(
 	'filter' => $filter,
 	'count' => count($files),
 	'files' => map_files_for_result($files),
+	'mode_readonly' => $mode_readonly,
 );
 echo json_encode($response);
 echo "\r\n";
